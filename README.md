@@ -1,108 +1,85 @@
 # 🔐 Keylogger (Cybersecurity Project)
 
-A **Python-based Keylogger*** developed as part of B.Tech Industrial Training at **Ardent Computech Pvt. Ltd.*
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python"/>
+  <img src="https://img.shields.io/badge/Platform-Linux-important?style=for-the-badge&logo=linux"/>
+  <img src="https://img.shields.io/badge/Security-AES%20Encryption-success?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/>
+</p>
 
+<p align="center">
+  <b>Secure • Ethical • Educational Cybersecurity Project</b>
+</p>
+
+---
+
+## 🚀 Overview
+
+A **Python-based Keylogger** developed as part of B.Tech Industrial Training at **Ardent Computech Pvt. Ltd.**
 This project demonstrates **secure keystroke logging with encryption, ethical compliance, and system monitoring techniques**.
 
 ---
 
 ## 📌 Introduction
 
-A keylogger is a software tool that records keystrokes made by a user. While it has legitimate uses like **parental control, system auditing, and security research**, it can also be misused.
+A keylogger records user keystrokes. While useful for **security research, parental control, and system auditing**, it can also be misused.
 
-👉 This project focuses on **ethical and secure implementation** of a keylogger.
+👉 This project focuses on **ethical, secure, and controlled implementation**.
 
 ---
 
 ## 🎯 Objectives
 
-* Develop a lightweight keylogger for Linux
-* Capture and store keystrokes securely
-* Implement **AES encryption**
-* Generate reports from logs
-* Ensure **ethical and legal compliance**
-* Protect user privacy with auto-deletion & secure storage
+* Lightweight Linux keylogger
+* Secure keystroke storage
+* AES encryption implementation
+* Report generation
+* Ethical & legal compliance
+* Privacy protection with auto-deletion
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Language:** Python
-* **Libraries:**
-
-  * `pynput` (keystroke capture)
-  * `cryptography / AES` (encryption)
-  * `datetime`, `os`, `threading`
+| Category  | Tools                |
+| --------- | -------------------- |
+| Language  | Python               |
+| Libraries | pynput, cryptography |
+| System    | Linux                |
 
 ---
 
-## ⚙️ System Workflow
+## ⚙️ Workflow
 
-1. Start keylogger
-2. Capture keystrokes
-3. Add timestamp & context
-4. Encrypt data (AES)
-5. Store in secure file
-6. Auto-delete logs after time
-7. Generate reports
+```mermaid
+graph TD;
+A[Start] --> B[Capture Keystrokes]
+B --> C[Add Timestamp]
+C --> D[Encrypt Data AES]
+D --> E[Store Logs]
+E --> F[Auto Delete]
+F --> G[Generate Report]
+```
 
 ---
 
 ## 🔐 Security Features
 
-* AES encrypted logs
-* Session-based key generation (no key storage)
-* Hidden log storage
-* Auto log deletion
-* Restricted access control
+* 🔒 AES encrypted logs
+* 🔑 Session-based key generation
+* 🕵️ Hidden storage
+* ⏳ Auto deletion
+* 🔐 Access control
 
 ---
 
-## 🧠 Methodology
+## 📊 Performance
 
-* Background execution using Python
-* Real-time keystroke capture using `pynput`
-* Encryption using AES (secure + fast)
-* Log storage with timestamped files
-* Report generation (CSV/TXT)
-
----
-
-## 📊 Results & Performance
-
-* ✔️ Accurate keystroke logging
-* ✔️ <3% CPU usage
-* ✔️ <50MB RAM usage
-* ✔️ Real-time logging (<10ms delay)
-* ✔️ Encrypted secure storage
-
----
-
-## ⚠️ Security Analysis
-
-**Threats Addressed:**
-
-* Unauthorized access
-* Data leakage
-* Log tampering
-
-**Mitigation:**
-
-* AES encryption
-* Session keys
-* No network transmission
-* Auto log deletion
-
----
-
-## ⚖️ Ethical Considerations
-
-* Must be used **with user consent**
-* Unauthorized monitoring is illegal
-* Complies with:
-
-  * IT Act (India)
-  * GDPR (EU)
+| Metric    | Value  |
+| --------- | ------ |
+| CPU Usage | < 3%   |
+| Memory    | < 50MB |
+| Delay     | < 10ms |
 
 ---
 
@@ -121,7 +98,7 @@ keylogger/
 
 ---
 
-## 🚀 Installation & Usage
+## 🚀 Installation
 
 ```bash
 git clone https://github.com/rohitmaji22/keylogger.git
@@ -134,38 +111,44 @@ python src/keylogger.py
 
 ## 📸 Screenshots
 
-*Add your screenshots here*
-
-```
-![Output](screenshots/your-image.png)
-```
+<p align="center">
+  <img src="screenshots/1.png" width="400"/>
+</p>
 
 ---
 
-## 🔮 Future Improvements
+## ⚠️ Security & Ethics
 
-* Web dashboard (Flask)
-* Email alerts
-* Log visualization
-* ML-based behavior detection
+* Use only with **user consent**
+* Unauthorized use is illegal
+* Complies with IT Act & GDPR
+
+---
+
+## 🔮 Future Scope
+
+* 🌐 Web dashboard
+* 📧 Email alerts
+* 📊 Visualization
+* 🤖 ML-based detection
 
 ---
 
 ## ⚠️ Disclaimer
 
-This project is strictly for **educational and ethical purposes only**.
+This project is strictly for **educational purposes only**.
 
-> Unauthorized use of keyloggers is illegal and punishable under law.
+> Misuse may lead to legal consequences.
 
 ---
 
 ## 👨‍💻 Author
 
 **Rohit Maji**
-B.Tech (Cyber Security)
+Cybersecurity Enthusiast
 
 ---
 
 ## ⭐ Support
 
-If you found this useful, give it a ⭐ on GitHub!
+Give a ⭐ if you like this project!
