@@ -1,66 +1,80 @@
-# ⚡ KeyTraceX
+<p align="center">
+  <img src="banner.png" alt="KeyTraceX Banner" width="100%"/>
+</p>
 
-<p align="center"> <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python"/> <img src="https://img.shields.io/badge/Platform-Linux-important?style=for-the-badge&logo=linux"/> <img src="https://img.shields.io/badge/Security-AES%20Encryption-success?style=for-the-badge"/> <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/> </p> <p align="center"> <b>Secure • Ethical • Educational Cybersecurity Project</b> </p>
----
+# 🔐 KeyTraceX – Encrypted Keylogger System
 
-## 🧠 About the Project
+<p align="center">
+  <b>Secure • Ethical • Lightweight Cybersecurity Project</b>
+</p>
 
-**KeyTraceX** is a stealth-oriented keystroke monitoring system built for **cybersecurity research and ethical system auditing**.
-
-It simulates real-world monitoring scenarios while maintaining **strict encryption, controlled execution, and privacy safeguards**.
-
----
-
-## 🕶️ Core Capabilities
-
-```
-[+] Real-time Keystroke Capture
-[+] AES-256 Encryption Engine
-[+] Ephemeral Session Keys
-[+] Auto Log Destruction
-[+] Report Generation System
-[+] Low Resource Footprint
-```
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python"/>
+  <img src="https://img.shields.io/badge/Platform-Linux-black?style=for-the-badge&logo=linux"/>
+  <img src="https://img.shields.io/badge/Encryption-AES--256-green?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/>
+</p>
 
 ---
 
-## ⚙️ System Flow
+## 🚀 Overview
+
+**KeyTraceX** is a Python-based keylogging system designed for **cybersecurity research and ethical monitoring**.
+It focuses on **secure keystroke capture, AES encryption, and privacy-aware data handling**.
+
+---
+
+## ✨ Features
+
+* 🔑 Real-time keystroke capture
+* 🔒 AES-256 encrypted logs
+* 🧠 Session-based key generation
+* ⏳ Automatic log deletion
+* 📄 Report generation
+* ⚡ Lightweight performance
+
+---
+
+## ⚙️ Workflow
 
 ```mermaid
-graph LR
-A[User Input] --> B[Capture Engine]
-B --> C[Timestamp Injector]
-C --> D[Encryption Layer]
-D --> E[Secure Storage]
-E --> F[Auto Purge]
-F --> G[Report Output]
+graph TD;
+A[Start] --> B[Capture Keystrokes]
+B --> C[Timestamp]
+C --> D[Encrypt]
+D --> E[Store Logs]
+E --> F[Auto Delete]
+F --> G[Report]
 ```
 
 ---
 
-## 🔐 Encryption Layer
+## 🔐 Security Architecture
 
-* AES-256 encryption using Python cryptography module
-* Keys generated per session (never stored)
-* Secure handling of sensitive keystroke data
+* AES-256 encryption using `cryptography`
+* Session keys (not stored)
+* Secure file handling
+* Auto log cleanup
 
 ---
 
-## 📁 Directory Structure
+## 📂 Project Structure
 
 ```
 KeyTraceX/
-├── src/            # Core engine
-├── logs/           # Encrypted keystrokes
-├── reports/        # Generated reports
-├── docs/           # Documentation
-├── screenshots/    # Visuals
+├── src/
+├── logs/
+├── reports/
+├── screenshots/
+├── docs/
+├── banner.png
+├── README.md
 └── requirements.txt
 ```
 
 ---
 
-## 🚀 Deployment
+## 🚀 Installation
 
 ```bash
 git clone https://github.com/rohitmaji22/KeyTraceX.git
@@ -71,56 +85,21 @@ python src/keylogger.py
 
 ---
 
-## 📊 Performance Metrics
+## ⚖️ Legal & Ethical Use
 
-| Parameter | Value  |
-| --------- | ------ |
-| CPU Usage | < 3%   |
-| Memory    | < 50MB |
-| Latency   | < 10ms |
-
----
-
-## ⚠️ Ethical Protocol
-
-```
-> Access without consent = ILLEGAL
-> Monitoring without authorization = VIOLATION
-> Use responsibly
-```
-
-✔ Educational
-✔ Authorized Testing
-✔ Research Use
-
----
-
-## 🧬 Future Enhancements
-
-* Web-based monitoring dashboard
-* Real-time alert system
-* Data visualization module
-* AI-based anomaly detection
+* ✔ Educational use
+* ✔ Authorized monitoring
+* ❌ Unauthorized use is illegal
 
 ---
 
 ## 👨‍💻 Author
 
 **Rohit Maji**
-Cybersecurity | Ethical Hacking | Python
+Cybersecurity Enthusiast
 
 ---
 
-## ⭐ Signal Boost
+## ⭐ Support
 
-If this project helped or inspired you:
-
-```
-[ ★ STAR THE REPO ]
-```
-
----
-
-<p align="center">
-  <i>"In cybersecurity, silence is power."</i>
-</p>
+Give a ⭐ if you like this project!
