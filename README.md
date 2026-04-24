@@ -1,14 +1,6 @@
 # ⚡ KeyTraceX
 
-> *Silent. Secure. Untraceable.*
-
-<p align="center">
-  <img src="https://img.shields.io/badge/System-Linux-black?style=for-the-badge&logo=linux"/>
-  <img src="https://img.shields.io/badge/Language-Python-blue?style=for-the-badge&logo=python"/>
-  <img src="https://img.shields.io/badge/Encryption-AES--256-green?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Mode-Stealth-red?style=for-the-badge"/>
-</p>
-
+<p align="center"> <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python"/> <img src="https://img.shields.io/badge/Platform-Linux-important?style=for-the-badge&logo=linux"/> <img src="https://img.shields.io/badge/Security-AES%20Encryption-success?style=for-the-badge"/> <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/> </p> <p align="center"> <b>Secure • Ethical • Educational Cybersecurity Project</b> </p>
 ---
 
 ## 🧠 About the Project
