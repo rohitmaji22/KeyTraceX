@@ -1,154 +1,134 @@
-# 🔐 Keylogger (Cybersecurity Project)
+# ⚡ KeyTraceX
+
+> *Silent. Secure. Untraceable.*
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python"/>
-  <img src="https://img.shields.io/badge/Platform-Linux-important?style=for-the-badge&logo=linux"/>
-  <img src="https://img.shields.io/badge/Security-AES%20Encryption-success?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/>
-</p>
-
-<p align="center">
-  <b>Secure • Ethical • Educational Cybersecurity Project</b>
+  <img src="https://img.shields.io/badge/System-Linux-black?style=for-the-badge&logo=linux"/>
+  <img src="https://img.shields.io/badge/Language-Python-blue?style=for-the-badge&logo=python"/>
+  <img src="https://img.shields.io/badge/Encryption-AES--256-green?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Mode-Stealth-red?style=for-the-badge"/>
 </p>
 
 ---
 
-## 🚀 Overview
+## 🧠 About the Project
 
-A **Python-based Keylogger** developed as part of B.Tech Industrial Training at **Ardent Computech Pvt. Ltd.**
-This project demonstrates **secure keystroke logging with encryption, ethical compliance, and system monitoring techniques**.
+**KeyTraceX** is a stealth-oriented keystroke monitoring system built for **cybersecurity research and ethical system auditing**.
 
----
-
-## 📌 Introduction
-
-A keylogger records user keystrokes. While useful for **security research, parental control, and system auditing**, it can also be misused.
-
-👉 This project focuses on **ethical, secure, and controlled implementation**.
+It simulates real-world monitoring scenarios while maintaining **strict encryption, controlled execution, and privacy safeguards**.
 
 ---
 
-## 🎯 Objectives
+## 🕶️ Core Capabilities
 
-* Lightweight Linux keylogger
-* Secure keystroke storage
-* AES encryption implementation
-* Report generation
-* Ethical & legal compliance
-* Privacy protection with auto-deletion
-
----
-
-## 🛠️ Tech Stack
-
-| Category  | Tools                |
-| --------- | -------------------- |
-| Language  | Python               |
-| Libraries | pynput, cryptography |
-| System    | Linux                |
+```
+[+] Real-time Keystroke Capture
+[+] AES-256 Encryption Engine
+[+] Ephemeral Session Keys
+[+] Auto Log Destruction
+[+] Report Generation System
+[+] Low Resource Footprint
+```
 
 ---
 
-## ⚙️ Workflow
+## ⚙️ System Flow
 
 ```mermaid
-graph TD;
-A[Start] --> B[Capture Keystrokes]
-B --> C[Add Timestamp]
-C --> D[Encrypt Data AES]
-D --> E[Store Logs]
-E --> F[Auto Delete]
-F --> G[Generate Report]
+graph LR
+A[User Input] --> B[Capture Engine]
+B --> C[Timestamp Injector]
+C --> D[Encryption Layer]
+D --> E[Secure Storage]
+E --> F[Auto Purge]
+F --> G[Report Output]
 ```
 
 ---
 
-## 🔐 Security Features
+## 🔐 Encryption Layer
 
-* 🔒 AES encrypted logs
-* 🔑 Session-based key generation
-* 🕵️ Hidden storage
-* ⏳ Auto deletion
-* 🔐 Access control
+* AES-256 encryption using Python cryptography module
+* Keys generated per session (never stored)
+* Secure handling of sensitive keystroke data
 
 ---
 
-## 📊 Performance
-
-| Metric    | Value  |
-| --------- | ------ |
-| CPU Usage | < 3%   |
-| Memory    | < 50MB |
-| Delay     | < 10ms |
-
----
-
-## 📂 Project Structure
+## 📁 Directory Structure
 
 ```
-keylogger/
-├── src/
-├── screenshots/
-├── reports/
-├── docs/
-├── requirements.txt
-├── README.md
-└── .gitignore
+KeyTraceX/
+├── src/            # Core engine
+├── logs/           # Encrypted keystrokes
+├── reports/        # Generated reports
+├── docs/           # Documentation
+├── screenshots/    # Visuals
+└── requirements.txt
 ```
 
 ---
 
-## 🚀 Installation
+## 🚀 Deployment
 
 ```bash
-git clone https://github.com/rohitmaji22/keylogger.git
-cd keylogger
+git clone https://github.com/rohitmaji22/KeyTraceX.git
+cd KeyTraceX
 pip install -r requirements.txt
 python src/keylogger.py
 ```
 
 ---
 
-## 📸 Screenshots
+## 📊 Performance Metrics
 
-<p align="center">
-  <img src="screenshots/1.png" width="400"/>
-</p>
-
----
-
-## ⚠️ Security & Ethics
-
-* Use only with **user consent**
-* Unauthorized use is illegal
-* Complies with IT Act & GDPR
+| Parameter | Value  |
+| --------- | ------ |
+| CPU Usage | < 3%   |
+| Memory    | < 50MB |
+| Latency   | < 10ms |
 
 ---
 
-## 🔮 Future Scope
+## ⚠️ Ethical Protocol
 
-* 🌐 Web dashboard
-* 📧 Email alerts
-* 📊 Visualization
-* 🤖 ML-based detection
+```
+> Access without consent = ILLEGAL
+> Monitoring without authorization = VIOLATION
+> Use responsibly
+```
+
+✔ Educational
+✔ Authorized Testing
+✔ Research Use
 
 ---
 
-## ⚠️ Disclaimer
+## 🧬 Future Enhancements
 
-This project is strictly for **educational purposes only**.
-
-> Misuse may lead to legal consequences.
+* Web-based monitoring dashboard
+* Real-time alert system
+* Data visualization module
+* AI-based anomaly detection
 
 ---
 
 ## 👨‍💻 Author
 
 **Rohit Maji**
-Cybersecurity Enthusiast
+Cybersecurity | Ethical Hacking | Python
 
 ---
 
-## ⭐ Support
+## ⭐ Signal Boost
 
-Give a ⭐ if you like this project!
+If this project helped or inspired you:
+
+```
+[ ★ STAR THE REPO ]
+```
+
+---
+
+<p align="center">
+  <i>"In cybersecurity, silence is power."</i>
+</p>
