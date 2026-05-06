@@ -18,6 +18,17 @@
 <p align="center">
   <a href="https://rohitmaji22.github.io/KeyTraceX/">
     <img src="https://img.shields.io/badge/🚀%20Live%20Demo-KeyTraceX-blueviolet?style=for-the-badge&logo=github" />
+    🏆 Internship & Project Certification
+
+This certificate is awarded for the successful completion of an Industrial Training and Internship at Ardent Computech Pvt. Ltd., where the project “Key Logger” was developed under professional guidance.
+
+During this internship, the project focused on Cyber Security and Ethical Hacking, demonstrating practical implementation of:
+
+Secure keystroke logging techniques
+Encryption and data protection concepts
+Ethical monitoring and cybersecurity practices
+
+The work was officially evaluated and recognized as satisfactory and commendable by the organization.
   </a>
   <a href="https://drive.google.com/file/d/1R1CTTtQe_-Cpq24Bc4mreObTIO25pOdg/view"></a>
 </p>
