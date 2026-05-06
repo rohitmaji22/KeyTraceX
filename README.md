@@ -15,17 +15,15 @@
   <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/>
 </p>
 
----<p align="center">
+<p align="center">
   <a href="https://rohitmaji22.github.io/KeyTraceX/">
     <img src="https://img.shields.io/badge/🚀%20Live%20Demo-KeyTraceX-blueviolet?style=for-the-badge&logo=github" />
   </a>
-</p>## 🏆 Certification
-
-<p align="center">
   <a href="https://drive.google.com/file/d/1R1CTTtQe_-Cpq24Bc4mreObTIO25pOdg/view">
     <img src="screenshots/certificate.png" width="600"/>
   </a>
 </p>
+
 
 <p align="center">
   <a href="https://drive.google.com/file/d/1R1CTTtQe_-Cpq24Bc4mreObTIO25pOdg/view">
