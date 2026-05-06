@@ -2,7 +2,7 @@
   <img src="banner.png" alt="KeyTraceX Banner" width="100%"/>
 </p>
 
-# 🔐 KeyTraceX –Keylogger System
+# 🔐 KeyTraceX – Keylogger System
 
 <p align="center">
   <b>Secure • Ethical • Lightweight Cybersecurity Project</b>
@@ -15,27 +15,29 @@
   <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/>
 </p>
 
----<p align="center">
+<p align="center">
   <a href="https://rohitmaji22.github.io/KeyTraceX/">
-    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-KeyTraceX-blueviolet?style=for-the-badge&logo=github" />
+    <img src="https://img.shields.io/badge/🌐%20Live%20Website-KeyTraceX-0A66C2?style=for-the-badge&logo=google-chrome&logoColor=white" />
   </a>
 </p>
 
+---
+
 ## 🚀 Overview
 
-**KeyTraceX** is a Python-based keylogging system designed for **cybersecurity research and ethical monitoring**.
+**KeyTraceX** is a Python-based keylogging system designed for **cybersecurity research and ethical monitoring**.  
 It focuses on **secure keystroke capture, AES encryption, and privacy-aware data handling**.
 
 ---
 
 ## ✨ Features
 
-* 🔑 Real-time keystroke capture
-* 🔒 AES-256 encrypted logs
-* 🧠 Session-based key generation
-* ⏳ Automatic log deletion
-* 📄 Report generation
-* ⚡ Lightweight performance
+* 🔑 Real-time keystroke capture  
+* 🔒 AES-256 encrypted logs  
+* 🧠 Session-based key generation  
+* ⏳ Automatic log deletion  
+* 📄 Report generation  
+* ⚡ Lightweight performance  
 
 ---
 
@@ -49,61 +51,3 @@ C --> D[Encrypt]
 D --> E[Store Logs]
 E --> F[Auto Delete]
 F --> G[Report]
-```
-
----
-
-## 🔐 Security Architecture
-
-* AES-256 encryption using `cryptography`
-* Session keys (not stored)
-* Secure file handling
-* Auto log cleanup
-
----
-
-## 📂 Project Structure
-
-```
-KeyTraceX/
-├── src/
-├── logs/
-├── reports/
-├── screenshots/
-├── docs/
-├── banner.png
-├── README.md
-└── requirements.txt
-```
-
----
-
-## 🚀 Installation
-
-```bash
-git clone https://github.com/rohitmaji22/KeyTraceX.git
-cd KeyTraceX
-pip install -r requirements.txt
-python src/keylogger.py
-```
-
----
-
-## ⚖️ Legal & Ethical Use
-
-* ✔ Educational use
-* ✔ Authorized monitoring
-* ❌ Unauthorized use is illegal
-
----
-
-## 👨‍💻 Author
-
-**Rohit Maji**
-Cybersecurity Enthusiast
-
----
-
-## ⭐ Support
-
-Give a ⭐ if you like this project!
