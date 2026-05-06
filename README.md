@@ -19,7 +19,7 @@
   <a href="https://rohitmaji22.github.io/KeyTraceX/">
     <img src="https://img.shields.io/badge/🚀%20Live%20Demo-KeyTraceX-blueviolet?style=for-the-badge&logo=github" />
     
-🏆 Internship & Project Certification
+## 🏆 Internship & Project Certification
 
 This certificate is awarded for the successful completion of an Industrial Training and Internship at Ardent Computech Pvt. Ltd., where the project “Key Logger” was developed under professional guidance.
 
@@ -37,7 +37,7 @@ The work was officially evaluated and recognized as satisfactory and commendable
 
 <p align="center">
   <a href="https://drive.google.com/file/d/1R1CTTtQe_-Cpq24Bc4mreObTIO25pOdg/view">
-    <img src="https://img.shields.io/badge/⬇ Download%20Certificate-PDF-red?style=for-the-badge&logo=adobe-acrobat-reader"/>
+    <img src="https://img.shields.io/badge/⬇ Show %20Certificate-PDF-red?style=for-the-badge&logo=adobe-acrobat-reader"/>
   </a>
 </p>
 
