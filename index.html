@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KeyTraceX — Ethical Keylogger System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #060a0f;
+      --bg2: #0b1018;
+      --surface: #0f1720;
+      --border: #1a2d40;
+      --green: #00ff88;
+      --green-dim: #00cc6a;
+      --green-glow: rgba(0,255,136,0.15);
+      --cyan: #00e5ff;
+      --red: #ff3a5c;
+      --text: #c8dbe8;
+      --muted: #4a6578;
+      --white: #e8f4ff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,136,0.015) 2px,
+        rgba(0,255,136,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Animated grid background */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridPulse 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(6,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 20px var(--green);
+    }
+
+    .nav-logo span { color: var(--white); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+      text-shadow: 0 0 12px var(--green);
+    }
+
+    .nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--bg);
+      background: var(--green);
+      border: none;
+      padding: 0.55rem 1.4rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--cyan);
+      box-shadow: 0 0 24px rgba(0,229,255,0.4);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-corner {
+      position: absolute;
+      top: 6rem; right: 4rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-align: right;
+      line-height: 2;
+    }
+
+    .hero-corner span {
+      display: block;
+      color: var(--green);
+    }
+
+    .hero-content {
+      max-width: 900px;
+      text-align: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--green);
+      text-transform: uppercase;
+      border: 1px solid var(--green);
+      padding: 0.3rem 1rem;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.6s ease both;
+      position: relative;
+    }
+
+    .hero-tag::before {
+      content: '> ';
+    }
+
+    .hero-title {
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      animation: fadeInUp 0.7s 0.1s ease both;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title .accent {
+      color: var(--green);
+      text-shadow: 0 0 40px rgba(0,255,136,0.5);
+      position: relative;
+    }
+
+    .hero-subtitle-line {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      animation: fadeInUp 0.7s 0.2s ease both;
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text);
+      max-width: 620px;
+      margin: 0 auto 3rem;
+      animation: fadeInUp 0.7s 0.3s ease both;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      animation: fadeInUp 0.7s 0.4s ease both;
+    }
+
+    .badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid;
+      color: var(--green);
+      border-color: var(--green);
+      background: rgba(0,255,136,0.05);
+    }
+
+    .badge.cyan { color: var(--cyan); border-color: var(--cyan); background: rgba(0,229,255,0.05); }
+    .badge.red  { color: var(--red);  border-color: var(--red);  background: rgba(255,58,92,0.05); }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.7s 0.5s ease both;
+    }
+
+    .btn-primary {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--bg);
+      background: var(--green);
+      padding: 0.9rem 2.2rem;
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--cyan);
+      box-shadow: 0 0 30px rgba(0,229,255,0.4);
+    }
+
+    .btn-outline {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 0.9rem 2.2rem;
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      background: var(--green-glow);
+      box-shadow: 0 0 20px var(--green-glow);
+    }
+
+    /* Scrolling keystroke ticker */
+    .ticker {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      padding: 0.8rem 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 3rem;
+      animation: ticker 20s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-track span {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .ticker-track span.key {
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-label::before { content: '// '; }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+
+    /* FEATURES */
+    #features {
+      padding: 7rem 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1.5px solid var(--border);
+      margin-top: 4rem;
+    }
+
+    .feature-card {
+      background: var(--bg2);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--green);
+      transition: height 0.4s ease;
+    }
+
+    .feature-card:hover::before { height: 100%; }
+    .feature-card:hover { background: var(--surface); }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .feature-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-desc {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ARCHITECTURE */
+    #architecture {
+      padding: 7rem 0;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .arch-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 4rem;
+    }
+
+    .arch-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .flow-step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--green);
+      border: 1px solid var(--green);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .step-info h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .step-info p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .arch-code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .arch-code::before {
+      content: 'SECURITY.ARCH';
+      position: absolute;
+      top: 0.7rem; right: 1rem;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+    }
+
+    .code-comment { color: var(--muted); }
+    .code-key { color: var(--cyan); }
+    .code-val { color: var(--green); }
+    .code-str { color: #ffb347; }
+    .code-red { color: var(--red); }
+
+    /* INSTALL */
+    #install {
+      padding: 7rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .install-wrap {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .install-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .install-step {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+
+    .step-dot {
+      width: 8px; height: 8px;
+      background: var(--green);
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px var(--green);
+    }
+
+    .install-step h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .install-step p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .terminal {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.r { background: var(--red); }
+    .dot.y { background: #ffb347; }
+    .dot.g { background: var(--green); }
+
+    .terminal-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-left: auto;
+    }
+
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 2;
+    }
+
+    .t-line { display: block; }
+    .t-prompt { color: var(--green); }
+    .t-cmd { color: var(--white); }
+    .t-out { color: var(--muted); }
+    .t-success { color: var(--cyan); }
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 1em;
+      background: var(--green);
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* STRUCTURE */
+    #structure {
+      padding: 7rem 0;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .structure-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 4rem;
+      align-items: center;
+    }
+
+    .file-tree {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 2.1;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+    }
+
+    .tree-root { color: var(--green); font-weight: bold; }
+    .tree-dir { color: var(--cyan); }
+    .tree-file { color: var(--text); }
+    .tree-branch { color: var(--border); }
+
+    .structure-text h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .structure-text p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .tag.active { border-color: var(--green); color: var(--green); background: rgba(0,255,136,0.07); }
+
+    /* ETHICS */
+    #ethics {
+      padding: 7rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .ethics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .ethics-card {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .ethics-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .ethics-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+
+    .ethics-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .ethics-card.allowed { border-color: rgba(0,255,136,0.3); }
+    .ethics-card.allowed .ethics-icon::after { content: ' ✔'; font-size: 0.8rem; color: var(--green); }
+
+    .ethics-card.denied { border-color: rgba(255,58,92,0.3); }
+    .ethics-card.denied .ethics-icon::after { content: ' ✖'; font-size: 0.8rem; color: var(--red); }
+
+    /* AUTHOR */
+    #author {
+      padding: 7rem 0;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .author-wrap {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 700px;
+    }
+
+    .author-avatar {
+      width: 100px;
+      height: 100px;
+      border: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      background: var(--surface);
+      box-shadow: 0 0 30px rgba(0,255,136,0.2);
+      flex-shrink: 0;
+    }
+
+    .author-info h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .author-role {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+    }
+
+    .author-info p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .author-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .author-link {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 0.4rem 1rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .author-link:hover {
+      background: var(--green);
+      color: var(--bg);
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 3rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      color: var(--green);
+      text-shadow: 0 0 15px var(--green);
+    }
+
+    .footer-copy {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-star {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 0.4rem 1.2rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .footer-star:hover { background: var(--green); color: var(--bg); }
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .container { padding: 0 1.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .arch-layout, .install-wrap, .structure-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .ethics-grid { grid-template-columns: 1fr; }
+      .author-wrap { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Key<span>Trace</span>X</div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="#ethics">Ethics</a></li>
+      <li><a href="#author">Author</a></li>
+    </ul>
+    <a href="https://github.com/rohitmaji22/KeyTraceX" target="_blank" class="nav-cta">View on GitHub</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-corner">
+      <span>v1.0.0</span>
+      PYTHON 3.x<br>
+      LINUX / UNIX<br>
+      AES-256
+    </div>
+    <div class="hero-content">
+      <div class="hero-tag">Cybersecurity Research Tool</div>
+      <h1 class="hero-title">Key<span class="accent">Trace</span>X</h1>
+      <p class="hero-subtitle-line">— KEYLOGGER SYSTEM —</p>
+      <p class="hero-desc">
+        A Python-based keylogging system engineered for cybersecurity research and ethical monitoring.
+        Secure keystroke capture with AES-256 encryption, session-based keys, and automatic log cleanup.
+      </p>
+      <div class="hero-badges">
+        <span class="badge">Python 3.x</span>
+        <span class="badge cyan">AES-256 Encrypted</span>
+        <span class="badge">Linux Platform</span>
+        <span class="badge cyan">Session Keys</span>
+        <span class="badge red">Ethical Use Only</span>
+      </div>
+      <div class="hero-actions">
+        <a href="https://github.com/rohitmaji22/KeyTraceX" target="_blank" class="btn-primary">Clone Repository</a>
+        <a href="#install" class="btn-outline">Quick Install</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>[<span class="key">H</span>] [<span class="key">e</span>] [<span class="key">l</span>] [<span class="key">l</span>] [<span class="key">o</span>] — KEYSTROKE CAPTURED — AES-256 ENCRYPTED — SESSION KEY ACTIVE — LOG STORED — AUTO-DELETE SCHEDULED — REPORT GENERATED — MONITORING ACTIVE — ETHICAL USE ENFORCED</span>
+      <span>[<span class="key">H</span>] [<span class="key">e</span>] [<span class="key">l</span>] [<span class="key">l</span>] [<span class="key">o</span>] — KEYSTROKE CAPTURED — AES-256 ENCRYPTED — SESSION KEY ACTIVE — LOG STORED — AUTO-DELETE SCHEDULED — REPORT GENERATED — MONITORING ACTIVE — ETHICAL USE ENFORCED</span>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">capabilities</p>
+        <h2 class="section-title">Built for Security<br>Designed for Ethics</h2>
+      </div>
+      <div class="features-grid reveal">
+        <div class="feature-card">
+          <span class="feature-icon">⌨️</span>
+          <p class="feature-num">01</p>
+          <h3 class="feature-name">Real-Time Capture</h3>
+          <p class="feature-desc">Captures every keystroke in real-time with precise timestamps. Lightweight engine designed for minimal performance impact on the host system.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🔒</span>
+          <p class="feature-num">02</p>
+          <h3 class="feature-name">AES-256 Encryption</h3>
+          <p class="feature-desc">All captured data is immediately encrypted using industry-standard AES-256. No plaintext is ever written to disk — encryption happens in memory.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🔑</span>
+          <p class="feature-num">03</p>
+          <h3 class="feature-name">Session-Based Keys</h3>
+          <p class="feature-desc">Encryption keys are generated per session and never persisted to storage. Once a session ends, the key is gone — ensuring forward secrecy.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">⏳</span>
+          <p class="feature-num">04</p>
+          <h3 class="feature-name">Auto Log Deletion</h3>
+          <p class="feature-desc">Logs are automatically purged after a configurable retention window. Privacy-first design ensures data doesn't accumulate unnecessarily.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">📄</span>
+          <p class="feature-num">05</p>
+          <h3 class="feature-name">Report Generation</h3>
+          <p class="feature-desc">Generate structured activity reports from encrypted logs. Human-readable summaries for authorized review without exposing raw keystream data.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">⚡</span>
+          <p class="feature-num">06</p>
+          <h3 class="feature-name">Lightweight Design</h3>
+          <p class="feature-desc">Pure Python implementation with minimal dependencies. Runs efficiently in the background with a tiny memory and CPU footprint.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">security architecture</p>
+        <h2 class="section-title">How KeyTraceX<br>Protects Your Data</h2>
+      </div>
+      <div class="arch-layout">
+        <div class="arch-flow reveal">
+          <div class="flow-step">
+            <div class="step-num">01</div>
+            <div class="step-info">
+              <h4>Keystroke Capture</h4>
+              <p>Event listener hooks into the OS keyboard input layer. Captures keystrokes with microsecond-precision timestamps.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">02</div>
+            <div class="step-info">
+              <h4>Timestamp & Buffer</h4>
+              <p>Each event is annotated with a monotonic timestamp and buffered in-memory before any disk operation.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">03</div>
+            <div class="step-info">
+              <h4>AES-256 Encryption</h4>
+              <p>Buffer contents are encrypted using the session key via the <code style="color:var(--cyan)">cryptography</code> library. CBC mode with random IV per write.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">04</div>
+            <div class="step-info">
+              <h4>Secure Storage</h4>
+              <p>Ciphertext is written to the logs directory. File permissions are set to restrict unauthorized read access.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">05</div>
+            <div class="step-info">
+              <h4>Auto-Delete & Report</h4>
+              <p>Retention policy triggers automatic deletion. Reports are generated from decrypted data and then re-secured.</p>
+            </div>
+          </div>
+        </div>
+        <div class="arch-code reveal">
+<span class="code-comment"># Security Configuration</span>
+<span class="code-key">ENCRYPTION_ALGO</span> <span style="color:var(--muted)">=</span> <span class="code-val">"AES-256-CBC"</span>
+<span class="code-key">KEY_PERSISTENCE</span> <span style="color:var(--muted)">=</span> <span class="code-red">False</span>
+<span class="code-key">PLAINTEXT_DISK</span> <span style="color:var(--muted)">=</span> <span class="code-red">Never</span>
+<span class="code-key">IV_STRATEGY</span>    <span style="color:var(--muted)">=</span> <span class="code-val">"random_per_write"</span>
+
+<span class="code-comment"># Session Lifecycle</span>
+<span class="code-key">session_key</span> <span style="color:var(--muted)">=</span> <span class="code-str">generate_key()</span>
+<span class="code-key">on_exit</span>     <span style="color:var(--muted)">=</span> <span class="code-str">destroy_key(session_key)</span>
+
+<span class="code-comment"># Retention Policy</span>
+<span class="code-key">AUTO_DELETE</span>  <span style="color:var(--muted)">=</span> <span class="code-val">True</span>
+<span class="code-key">RETAIN_HOURS</span> <span style="color:var(--muted)">=</span> <span class="code-val">24</span>
+
+<span class="code-comment"># File Permissions</span>
+<span class="code-key">LOG_CHMOD</span>    <span style="color:var(--muted)">=</span> <span class="code-str">0o600</span>
+
+<span class="code-comment"># Ethical Gate</span>
+<span class="code-key">AUTH_REQUIRED</span> <span style="color:var(--muted)">=</span> <span class="code-val">True</span>
+<span class="code-key">UNAUTH_USE</span>    <span style="color:var(--muted)">=</span> <span class="code-red">ILLEGAL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">getting started</p>
+        <h2 class="section-title">Up and Running<br>in Minutes</h2>
+      </div>
+      <div class="install-wrap">
+        <div class="install-steps reveal">
+          <div class="install-step">
+            <div class="step-dot"></div>
+            <div>
+              <h4>Clone the Repository</h4>
+              <p>Download KeyTraceX from GitHub onto your Linux machine using git.</p>
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="step-dot"></div>
+            <div>
+              <h4>Enter the Directory</h4>
+              <p>Navigate into the cloned project folder to begin setup.</p>
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="step-dot"></div>
+            <div>
+              <h4>Install Dependencies</h4>
+              <p>Use pip to install the required Python packages from <code style="color:var(--cyan)">requirements.txt</code>. Primarily the <code style="color:var(--cyan)">cryptography</code> and <code style="color:var(--cyan)">pynput</code> packages.</p>
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="step-dot"></div>
+            <div>
+              <h4>Run the Keylogger</h4>
+              <p>Start the monitoring session. Ensure you have authorization before running on any system.</p>
+            </div>
+          </div>
+        </div>
+        <div class="terminal reveal">
+          <div class="terminal-bar">
+            <div class="dot r"></div>
+            <div class="dot y"></div>
+            <div class="dot g"></div>
+            <span class="terminal-title">bash — ~/KeyTraceX</span>
+          </div>
+          <div class="terminal-body">
+            <span class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">git clone https://github.com/rohitmaji22/KeyTraceX.git</span></span>
+            <span class="t-line t-out">Cloning into 'KeyTraceX'...</span>
+            <span class="t-line t-out">remote: Enumerating objects: 42, done.</span>
+            <span class="t-line t-success">✓ Clone complete</span>
+            <span class="t-line">&nbsp;</span>
+            <span class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">cd KeyTraceX</span></span>
+            <span class="t-line">&nbsp;</span>
+            <span class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">pip install -r requirements.txt</span></span>
+            <span class="t-line t-out">Installing cryptography... done</span>
+            <span class="t-line t-out">Installing pynput... done</span>
+            <span class="t-line t-success">✓ All dependencies installed</span>
+            <span class="t-line">&nbsp;</span>
+            <span class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">python src/keylogger.py</span></span>
+            <span class="t-line t-success">✓ KeyTraceX active — session key generated</span>
+            <span class="t-line t-out">  Capturing: <span style="color:var(--green)">ON</span> | Encryption: <span style="color:var(--green)">AES-256</span></span>
+            <span class="t-line"><span class="t-prompt">$</span> <span class="cursor"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRUCTURE -->
+  <section id="structure">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">project structure</p>
+        <h2 class="section-title">Clean, Organized<br>Codebase</h2>
+      </div>
+      <div class="structure-grid">
+        <div class="file-tree reveal">
+<span class="tree-root">KeyTraceX/</span>
+<span class="tree-branch">├── </span><span class="tree-dir">src/</span>
+<span class="tree-branch">│   ├── </span><span class="tree-file">keylogger.py</span>
+<span class="tree-branch">│   ├── </span><span class="tree-file">encryption.py</span>
+<span class="tree-branch">│   └── </span><span class="tree-file">report.py</span>
+<span class="tree-branch">├── </span><span class="tree-dir">logs/</span>
+<span class="tree-branch">│   └── </span><span class="tree-file">[encrypted .log files]</span>
+<span class="tree-branch">├── </span><span class="tree-dir">reports/</span>
+<span class="tree-branch">│   └── </span><span class="tree-file">session_report.txt</span>
+<span class="tree-branch">├── </span><span class="tree-dir">screenshots/</span>
+<span class="tree-branch">├── </span><span class="tree-file">.gitignore</span>
+<span class="tree-branch">├── </span><span class="tree-file">banner.png</span>
+<span class="tree-branch">├── </span><span class="tree-file">README.md</span>
+<span class="tree-branch">└── </span><span class="tree-file">requirements.txt</span>
+        </div>
+        <div class="structure-text reveal">
+          <h3>Modular & Readable Architecture</h3>
+          <p>KeyTraceX follows a clean separation of concerns — each Python module handles one specific responsibility. The keylogger captures, the encryption module secures, and the report module analyzes.</p>
+          <p>Logs and reports are kept separate from source code, and all sensitive data directories are excluded via <code style="color:var(--cyan)">.gitignore</code> to prevent accidental exposure.</p>
+          <div class="tag-list">
+            <span class="tag active">Python 3.x</span>
+            <span class="tag active">cryptography</span>
+            <span class="tag active">pynput</span>
+            <span class="tag">100% Python</span>
+            <span class="tag">MIT License</span>
+            <span class="tag">Linux</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ETHICS -->
+  <section id="ethics">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">legal & ethical use</p>
+        <h2 class="section-title">Know the Boundaries</h2>
+      </div>
+      <div class="ethics-grid">
+        <div class="ethics-card allowed reveal">
+          <div class="ethics-icon">🎓</div>
+          <h4>Educational Use</h4>
+          <p>Learning about keystroke capture, encryption, and secure data handling in controlled academic or lab environments.</p>
+        </div>
+        <div class="ethics-card allowed reveal">
+          <div class="ethics-icon">🏢</div>
+          <h4>Authorized Monitoring</h4>
+          <p>Monitoring systems you own or have explicit written authorization to monitor from the device owner.</p>
+        </div>
+        <div class="ethics-card denied reveal">
+          <div class="ethics-icon">🚫</div>
+          <h4>Unauthorized Use</h4>
+          <p>Deploying on any system without the owner's explicit consent is illegal under computer crime laws in most jurisdictions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHOR -->
+  <section id="author">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">creator</p>
+        <h2 class="section-title">Meet the Author</h2>
+      </div>
+      <div class="author-wrap reveal" style="margin-top:3rem">
+        <div class="author-avatar">👨‍💻</div>
+        <div class="author-info">
+          <h3>Rohit Maji</h3>
+          <p class="author-role">// CYBERSECURITY ENTHUSIAST</p>
+          <p>Passionate about building cybersecurity tools that balance power with responsibility. KeyTraceX is a project exploring the intersection of systems programming, encryption, and ethical software design.</p>
+          <div class="author-links">
+            <a href="https://github.com/rohitmaji22" target="_blank" class="author-link">GitHub Profile</a>
+            <a href="https://github.com/rohitmaji22/KeyTraceX" target="_blank" class="author-link">Repository</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">KeyTraceX</div>
+    <span class="footer-copy">© 2025 Rohit Maji — For educational & authorized use only</span>
+    <a href="https://github.com/rohitmaji22/KeyTraceX" target="_blank" class="footer-star">⭐ Star on GitHub</a>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Typing effect on hero tag
+    const tag = document.querySelector('.hero-tag');
+    const text = 'Cybersecurity Research Tool';
+    tag.textContent = '';
+    let i = 0;
+    const type = () => {
+      if (i < text.length) {
+        tag.textContent += text[i++];
+        setTimeout(type, 45);
+      }
+    };
+    setTimeout(type, 400);
+  </script>
+</body>
+</html>
